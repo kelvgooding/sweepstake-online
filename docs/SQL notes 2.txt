@@ -1,0 +1,20 @@
+User ID
+
+Button to have Range to delete for each
+
+----------
+
+Enter your Group code, or click Create Group
+- Group to be Databsae Name
+- Create Group - Database and table to created
+- Enter Code - Read from Database
+
+Upcoming Sweepsteaks
+
+DD/MM/YYYY - Grand National 2023
+DD/MM/YYYY - Grand National 2024
+
+Players Confirmed 1/40
+- Based of SQL count of players
+
+Previous Winners (in Group)

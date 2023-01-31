@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="author" content="Kelv Gooding">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <title>SS | Grand National 2023</title>
+</head>
+<body>
+    <header>
+    </header>
+    <main>
+        <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
+        <form method="POST">
+        ENTER YOUR 6<br>CHARACTER GROUP CODE:<br><br>
+        <input class="index-input-group-code" name="groupcode" maxlength="6" required><br><br>
+        {% for i in get_flashed_messages() %}
+        <b>{{ i }}</b><br>
+        {% endfor %}
+        <br>
+        <input type="submit" value="SUBMIT">
+        <br><br>
+        OR
+        <br><br>
+        <a href="{{ url_for('create_group') }}">CREATE A<br>GROUP CODE</a>
+        </form>
+        <br><br>
+    </main>
+    <footer>
+        <!-- Social Media Links -->
+        <section>
+        <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+        <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
+        <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
+        <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
+        </section>
+        <br>
+        <!-- Copyright -->
+        <section>
+        <div>
+            Created by Kelv Gooding<br>
+            © 2023 Live.Life.Automate! All rights reserved.<br>
+        </div>
+        </section>
+    </footer>
+</body>
+</html>

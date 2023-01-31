@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="author" content="Kelv Gooding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
+        <link rel="stylesheet" href="../static/css/styles.css">
+        <title>SS | Group - {{ groupcode }}</title>
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+            
+            <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
+            
+            <br><b>DETAILS:</b></br><br>
+            Date: Saturday 15th April 2023<br>
+            Time: 17:15 GMT<br>
+            Location: Aintree Racecourse<br>
+            Channel: ITV1<br>
+
+            <br><b>GROUP CODE:</b><br><br>
+            {{ groupcode }}
+            <br>
+            <br><b>GROUP HOST:</b><br><br>
+            {{ group_host_name.0 }}
+            <br>
+            <hr>
+
+            <b>RULES:</b><br><br>
+
+            <b>40</b> HORSES RUNNING<br>
+            <b>{{ p_count.0 }}</b> SPACES AVAILABLE<br>
+            <b>{{ hp }}</b> RANDOM PICK(S) PER PARTICIPANT<br>
+            <b>£{{ PPE.0 }}.00</b> PER PARTICIPANT<br>
+
+            <br>PLEASE CONTACT YOUR GROUP HOST<br>
+            TO ARANGE PAYMENT METHOD.<br>
+
+            <br>YOUR GROUP HOST WILL HAVE THE<br>
+            ABILITY TO MODIFY THE PARTICIPANTS<br>
+            LIST <a href="{{ url_for('admin') }}">HERE</a><br>
+
+            <br>ONCE YOUR GROUP HOST HAS USED<br>
+            THE GENERATE FEATURE, YOUR PICKS<br>
+            WILL BE SHOWN <a href="#show-picks">HERE</a><br>
+        
+            <hr>
+
+
+            <b>PRIZE MONEY:</b><br><br>
+
+            <table>
+                <tr>
+                    <td width="50px">
+                        <img width="18" height="18" src="../static/images/money-bag.png"/>
+                    </td>
+                    <td width="100px">
+                        £{{ jackpot.0 }}.00
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50px">
+                        <img width="18" height="18" src="../static/images/first_place.png"/>
+                    </td>
+                    <td width="100px">
+                        £{{ first }}0
+                    </td>
+                </tr>
+                <td>
+                    <img width="18" height="18" src="../static/images/second_place.png"/>
+                    </td>
+                    <td width="5px">
+                        £{{ second }}0
+                    </td>
+                <tr>
+                    <td>
+                        <img width="18" height="18" src="../static/images/third_place.png"/>
+                    </td>
+                    <td>
+                        £{{ third }}0
+                    </td>
+                </tr>
+            </table>
+
+            <hr>
+            <b>PARTICIPANTS:</b><br>
+
+            <br>
+
+            {% if filled.0 == p_count.0 %}
+
+                {{ filled.0 }}  /  {{ p_count.0 }} PARTICIPANTS
+                <br>
+                <p>NO MORE SPACES AVAILABLE!</p>
+                
+            {% else %}
+                {{ filled.0 }}  /  {{ p_count.0 }} PARTICIPANTS
+
+                <br><br>
+
+                JOIN GROUP:
+    
+                <br><br>
+    
+                <form method="POST">
+                    <input type="text" placeholder="Enter your name" name="join-group" required>
+                    <br><br>
+                    <input type="submit" value="Join">
+                </form>
+    
+            {% endif %}
+
+            <br>
+
+            <table>
+                <tr>
+                    <th width="125px">Status</th>
+                    <th width="160px">Name</th>
+                </tr>
+                {% for row in participants2 %}
+                <tr>                    
+                    <td>{% if row.0 == 'Y' %}
+                        <img width="15" height="15" src="../static/images/accept.png"/>
+                        {% elif row.0 == 'N' %}
+                        <img width="15" height="15" src="../static/images/remove.png"/>
+                        {% endif %}
+                    </td>
+                    <td>{{ row.1 }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <br><br>
+
+            <a id="show-picks" href="{{ url_for('picks') }}">SHOW PICKS</a>
+
+            <br><br>
+
+            <a href="{{ url_for('index') }}">RETURN HOME</a>
+            <br>
+
+            <br><br>
+        </main>
+        <footer>
+            <!-- Social Media Links -->
+
+            <section>
+                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+                <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
+                <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
+                <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
+            </section>
+
+            <!-- Copyright -->
+
+            <section>
+                <br>
+                <div>
+                    Created by Kelv Gooding<br>
+                    © 2023 Live.Life.Automate! All rights reserved.<br>
+            </section>
+        </footer>
+    </body>
+</html>

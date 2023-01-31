@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="author" content="Kelv Gooding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
+        <link rel="stylesheet" href="../static/css/styles.css">
+        <title>SS | Admin Login</title>
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+
+            <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
+            
+            <br><br>
+            <div class="admin-login-section">
+                <form method="POST">
+                <br>EMAIL:<br>
+                <input type="text" name="admin-email" placeholder="Enter your Email" required/><br><br>
+                GROUP CODE:<br>
+                <input type="text" name="admin-group-id" maxlength=6 placeholder="Enter your Group Code" required/><br>
+                <br><br>
+                <input type="submit" value="Confirm"/>
+            </form>
+
+        </div>
+
+        {% for i in get_flashed_messages()%}
+        <h3>{{i}}</h3>
+        {% endfor %}
+        
+        <br><br>
+        </table>
+        </main>
+        <footer>
+            <!-- Social Media Links -->
+
+            <section>
+                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+                <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
+                <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
+                <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
+            </section>
+
+            <!-- Copyright -->
+
+            <section>
+                <br>
+                <div>
+                    Created by Kelv Gooding<br>
+                    © 2023 Live.Life.Automate! All rights reserved.<br>
+            </section>
+        </footer>
+    </body>
+</html>

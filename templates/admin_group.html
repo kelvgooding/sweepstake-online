@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="author" content="Kelv Gooding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
+        <link rel="stylesheet" href="../static/css/styles.css">
+        <title>SS | Admin - {{ groupcode }}</title>
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+
+            <a href="{{ url_for('admin') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
+            
+            <br><br>
+
+            <b>GROUP CODE:</b><br><br>
+            {{ groupcode }}<br><br>
+
+            <b>MAX SPACES AVAILABLE:</b><br><br>
+            {{ max_participants.0.0 }}<br><br>
+
+            <b>ENTRY PRICE:</b><br><br>
+            £{{ entry_price.0.0 }}.00<br><br>
+
+            <b>UPDATE PARTICIPANTS:</b><br><br>
+        
+        <form method="POST">
+        <table>
+            <tr>
+                <th width="70px">Confirm</th>
+                <th width="160px">Full Name</th>
+                <th width="70px">Remove</th>
+            </tr>
+            {% for row in contacts %}
+            <tr id="{{row.1}}">
+                    {% if row.0 == 'Y' %}                    
+                    <td><input type="checkbox" name="mycheckbox" value="{{row.1}}" checked/></td>
+                    {% elif row.0 == 'N' %}
+                    <td><input type="checkbox" name="mycheckbox" value="{{row.1}}" /></td>
+                    {% endif %}
+                <td>{{row.1}}</td>
+                <td><input type="checkbox" name="mycheckbox2" value="{{row.1}}" /></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <br><br>
+
+        <input type="submit" value="Update" name="updated" />
+        <input type="submit" value="Remove" name="remove" />
+        <br><br>
+
+        {% for i in get_flashed_messages()%}
+        <b> {{ i }} </b>
+        {% endfor %}
+
+        {% if current_date == '31/01/2023' %}
+            {% if gen_flag.0.0 == 'Y' %}
+            <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE HAS ALREADY BEEN USED ONCE.</p>      
+            <input type="submit" value="Generate" name="generate" disabled class="button-disabled" />
+            {% else %}
+            <p style="font-size: 12px;">AVAILABLE:<br>THIS FEATURE CAN ONLY BE USED ONCE.</p>
+            <input type="submit" value="Generate" name="generate" />
+            {% endif %}
+        {% else %}
+            <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE WILL UNLOCK ON 15/04/2023 00:00</p>
+            <input type="submit" value="Generate" name="generate" disabled class="button-disabled" />    
+        {% endif %}
+        
+        </form>
+
+        <br>
+
+        <a href="{{ url_for('admin') }}">RETURN HOME</a>
+
+        <br><br>
+
+        </main>
+        <footer>
+            <!-- Social Media Links -->
+
+            <section>
+                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+                <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
+                <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
+                <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
+            </section>
+
+            <!-- Copyright -->
+
+            <section>
+                <br>
+                <div>
+                    Created by Kelv Gooding<br>
+                    © 2023 Live.Life.Automate! All rights reserved.<br>
+            </section>
+        </footer>
+    </body>
+</html>

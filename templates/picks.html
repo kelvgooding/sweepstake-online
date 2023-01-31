@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="author" content="Kelv Gooding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
+        <link rel="stylesheet" href="../static/css/styles.css">
+        <title>SS | Picks - {{ groupcode }}</title>
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+
+            <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
+
+            <br>
+
+            <input id="searchbar" onkeyup="search_participants()" type="text"
+            name="search" placeholder="SEARCH YOUR PICKS HERE" class="picks-searchbar">
+
+            <br><br>
+
+            {% for a in participants %}
+                <div class="participants">
+                    <div class="picks-cards">
+                        <br>
+                        <b>{{ a.0 }}<br><br>                
+                        {{ a.1 }} - {{ a.2 }}<br>
+                        {{ a.3 }}</b><br>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <br>
+
+            <a href="{{ url_for('group') }}">RETURN TO<br>GROUP</a>
+            <br><br>
+
+
+        </main>
+        <footer>
+            <!-- Social Media Links -->
+
+            <section>
+                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+                <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
+                <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
+                <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
+            </section>
+
+            <!-- Copyright -->
+
+            <section>
+                <br>
+                <div>
+                    Created by Kelv Gooding<br>
+                    © 2023 Live.Life.Automate! All rights reserved.<br>
+            </section>
+        </footer>
+    </body>
+
+    <script>
+        function search_participants() {
+            let input = document.getElementById('searchbar').value
+            input=input.toLowerCase();
+            let x = document.getElementsByClassName('participants');
+            
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                    x[i].style.display="none";
+                }
+                else {
+                    x[i].style.display="";				
+                }
+            }
+        }
+        </script>
+
+</html>
+

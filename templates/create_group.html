@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="author" content="Kelv Gooding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
+        <link rel="stylesheet" href="../static/css/styles.css">
+        <title>SS | Create a new group</title>
+    </head>
+    <body>
+        <header>
+        </header>
+        <main>
+
+            <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
+
+                <form method="POST">
+                    NUMBER OF PARTICIPANTS:<br>
+                    <select name="num_of_part" required>
+                        <option value="-">-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="40">40</option>
+                    </select><br/><br>
+
+                    GROUP HOST NAME:<br>
+                    <input type="text" name="hostname" required><br><br>
+                    EMAIL:<br>
+                    <input type="email" name="email" required><br><br>
+                    ENTRY PRICE:<br>
+                    <input type="number" name="entry_price" required><br><br>
+                    {% for i in get_flashed_messages() %}
+                        <b>{{ i }}</b><br>
+                    {% endfor %}
+                    <br>
+                    <input type="submit" value="SUBMIT">
+                    <br><br>
+                    <a href="{{ url_for('index') }}">RETURN HOME</a>
+                    <br>
+                </form>
+            <br><br>
+        </main>
+        <footer>
+            <!-- Social Media Links -->
+
+            <section>
+                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+                <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
+                <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
+                <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
+            </section>
+
+            <!-- Copyright -->
+
+            <section>
+                <br>
+                <div>
+                    Created by Kelv Gooding<br>
+                    © 2023 Live.Life.Automate! All rights reserved.<br>
+            </section>
+        </footer>
+    </body>
+</html>
