@@ -11,12 +11,12 @@ import string
 from datetime import datetime
 import os
 
-# config.ini for the passwords
+# flask variables
 
 app = Flask(__name__)
 app.secret_key = os.urandom(26)
 
-# SQLite3 DB Connection
+# sqlite3 variables
 
 connection = sqlite3.connect("static/db/SS_DB_PROD.db", check_same_thread=False)
 c = connection.cursor()
@@ -25,52 +25,55 @@ c = connection.cursor()
 
 @app.route("/", methods=["POST", "GET"])
 def index():
+
+    # an empty list array to store all group codes from ss_group table
+
+    all_group_codes = []
+
     if request.method == "POST":
 
-        # Codes - An empty list to store all group codes from ss_group table
+        # loop through groupid column in ss_group and add codes to all_group_codes list array
 
-        codes = []
+        for code in c.execute(f'select groupid from ss_group where groupid="{request.form.get("groupcode").upper()}";'):
+            all_group_codes.append(code[0])
 
-        for i in c.execute('select groupid from ss_group where groupid = (?);', (request.form.get('groupcode').upper(),)):
-            codes.append(i[0])
+        # if the group code exists in the all_group_codes list, proceed
 
-        if request.form.get('groupcode').upper() in codes:
+        if request.form.get('groupcode').upper() in all_group_codes:
             session['my_var'] = request.form.get('groupcode').upper()
             return redirect(url_for('group'))
+
         else:
             flash("INVALID GROUP CODE.")
             flash("PLEASE TRY AGAIN.")
-
 
     return render_template("index.html")
 
 @app.route("/create_group", methods=["POST", "GET"])
 def create_group():
 
-    # Create random group code - 6 Alpha Character
+    # create a 6 character group code
 
     new_group_code = ''.join(random.choices(string.ascii_uppercase, k=6))
 
     if request.method == "POST":
 
-        # Insert create group row data into ss_group
+        # insert form data into ss_group table
 
         c.execute("INSERT INTO ss_group VALUES (?, ?, ?, ?, ?, NULL, CURRENT_TIMESTAMP)", (
             f'{request.form.get("num_of_part")}',
             f'{request.form.get("hostname")}',
             f'{request.form.get("email")}',
             f'{request.form.get("entry_price")}',
-            f'{new_group_code}',
-        ))
-
+            f'{new_group_code}',))
         connection.commit()
 
-        # insert into ss_group_hosts
+        # insert form data into ss_group_hosts table
 
         c.execute("INSERT INTO ss_group_hosts VALUES (?, ?, CURRENT_TIMESTAMP)", (f'{request.form.get("hostname")}', f'{request.form.get("email")}',))
         connection.commit()
 
-        # create table group code - XXXXXX
+        # create table using the the randomly generated 6 character group code
 
         c.execute(f"CREATE TABLE {new_group_code} (status, full_name, admin, group_code, grp_rank)")
         connection.commit()
@@ -92,13 +95,26 @@ def create_group():
 
 @app.route("/group", methods=["POST", "GET"])
 def group():
-    groupcode = session.get('my_var', None)
+
+    # store group code into session
+
+    group_code = session.get('my_var', None)
+
+    # show group host on webpage
+
+    group_host_name = []
+
+    for i in c.execute("select hostname from ss_group where groupid = (?);", (f"{session.get('my_var', None)}",)):
+        group_host_name.append(i[0])
+
+    # an empty array for the jackpot total
 
     jackpot = []
 
-    for i in c.execute("select num_of_part * entry_price as jackpot from ss_group where groupid = (?);",
-                       (f"{session.get('my_var', None)}",)):
+    for i in c.execute("select num_of_part * entry_price as jackpot from ss_group where groupid = (?);",(f"{session.get('my_var', None)}",)):
         jackpot.append(i[0])
+
+    # prize money percentage calculation
 
     def percentage(percent, whole):
         return (percent * whole) / 100.0
@@ -109,15 +125,27 @@ def group():
     second = percentage(test, 60)
     third = percentage(test, 40)
 
-    group_host_name = []
-
-    for i in c.execute("select hostname from ss_group where groupid = (?);", (f"{session.get('my_var', None)}",)):
-        group_host_name.append(i[0])
+    # SQL count for participants
 
     p_count = []
 
     for i in c.execute("select num_of_part from ss_group where groupid = (?);", (f"{session.get('my_var', None)}",)):
         p_count.append(i[0])
+
+    # price each participant must be using entry_price in the group code table
+
+    PPE = []
+
+    ppe_query = f"select entry_price from ss_group where groupid = '{session.get('my_var', None)}'"
+
+    for i in c.execute(ppe_query):
+        PPE.append(i[0])
+
+    # number of horse picks per participant
+
+    horse_picks = (int(40) / int(p_count[0]))
+
+    # SQL to show count of rows in the group code table
 
     filled = []
 
@@ -132,20 +160,17 @@ def group():
     c.execute(participants_query)
     participants = c.fetchall()
 
+    #
+
     c.execute(f"SELECT status, full_name FROM '{session.get('my_var', None)}';")
     participants2 = c.fetchall()
 
-    PPE = []
+    c.execute(f'SELECT * FROM gn_horses ORDER BY ranked ASC LIMIT 3;')
+    all_horses = c.fetchall()
 
-    ppe_query = f"select entry_price from ss_group where groupid = '{session.get('my_var', None)}'"
-
-    for i in c.execute(ppe_query):
-        PPE.append(i[0])
-
-    horse_picks = (int(40) / int(PPE[0]))
 
     if request.method == "POST":
-        insertinto = f"INSERT INTO {session.get('my_var', None)} VALUES ('N', '{request.form.get('join-group')}', 'N', '{session.get('my_var', None)}', 'TBC')"
+        insertinto = f"INSERT INTO {session.get('my_var', None)} VALUES ('Y', '{request.form.get('join-group')}', 'N', '{session.get('my_var', None)}', 'TBC')"
 
         c.execute(insertinto)
         connection.commit()
@@ -154,7 +179,7 @@ def group():
 
     return render_template("group.html",
                            jackpot=jackpot,
-                           groupcode=groupcode,
+                           group_code=group_code,
                            group_host_name=group_host_name,
                            filled=filled,
                            p_count=p_count,
@@ -164,7 +189,8 @@ def group():
                            second=second,
                            third=third,
                            PPE=PPE,
-                           hp=int(horse_picks), )
+                           hp=int(horse_picks),
+                           all_horses=all_horses, )
 
 @app.route("/group/picks", methods=["POST", "GET"])
 def picks():

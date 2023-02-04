@@ -23,51 +23,57 @@
             {{ max_participants.0.0 }}<br><br>
 
             <b>ENTRY PRICE:</b><br><br>
-            £{{ entry_price.0.0 }}.00<br><br>
+            £{{ entry_price.0.0 }}.00<br>
 
-            <b>UPDATE PARTICIPANTS:</b><br><br>
+            <hr>
+
+            <b>PARTICIPANTS:</b><br><br>
+
+            SELECT A/MULTIPLE NAMES AND USE<br>THE BUTTON TO REMOVE<br>PARTICIPANTS FROM YOUR GROUP.<br><br>
         
         <form method="POST">
         <table>
             <tr>
-                <th width="70px">Confirm</th>
-                <th width="160px">Full Name</th>
-                <th width="70px">Remove</th>
+                <th width="200px">Full Name</th>
+                <th width="100px">Remove</th>
             </tr>
             {% for row in contacts %}
             <tr id="{{row.1}}">
-                    {% if row.0 == 'Y' %}                    
-                    <td><input type="checkbox" name="mycheckbox" value="{{row.1}}" checked/></td>
-                    {% elif row.0 == 'N' %}
-                    <td><input type="checkbox" name="mycheckbox" value="{{row.1}}" /></td>
-                    {% endif %}
                 <td>{{row.1}}</td>
                 <td><input type="checkbox" name="mycheckbox2" value="{{row.1}}" /></td>
             </tr>
             {% endfor %}
         </table>
 
-        <br><br>
+        <br>
 
-        <input type="submit" value="Update" name="updated" />
         <input type="submit" value="Remove" name="remove" />
-        <br><br>
+        <br>
+
+        <hr>
+
+        <b>GENERATE:</b>
+
+        <br><br>USE THIS FEATURE TO GENERATE<br>THE RANDOM PICKS FOR YOUR GROUP.
 
         {% for i in get_flashed_messages()%}
         <b> {{ i }} </b>
         {% endfor %}
+        
 
-        {% if current_date == '31/01/2023' %}
+        <br><br>
+
+        {% if current_date == '04/02/2023' %}
             {% if gen_flag.0.0 == 'Y' %}
-            <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE HAS ALREADY BEEN USED ONCE.</p>      
             <input type="submit" value="Generate" name="generate" disabled class="button-disabled" />
+            <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE HAS ALREADY BEEN USED ONCE.</p>      
             {% else %}
+            <input type="submit" value="Generate" name="generate"/>
             <p style="font-size: 12px;">AVAILABLE:<br>THIS FEATURE CAN ONLY BE USED ONCE.</p>
-            <input type="submit" value="Generate" name="generate" />
             {% endif %}
         {% else %}
-            <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE WILL UNLOCK ON 15/04/2023 00:00</p>
             <input type="submit" value="Generate" name="generate" disabled class="button-disabled" />    
+            <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE WILL UNLOCK ON 15/04/2023 00:00</p>
         {% endif %}
         
         </form>
@@ -83,10 +89,11 @@
             <!-- Social Media Links -->
 
             <section>
-                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+                <a href="https://livelifeautomate.co.uk" target="_blank"><img src="../static/images/web-logo.png" class="img-logo-social"/></a>
                 <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
                 <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
                 <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
+                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
             </section>
 
             <!-- Copyright -->
@@ -96,6 +103,7 @@
                 <div>
                     Created by Kelv Gooding<br>
                     © 2023 Live.Life.Automate! All rights reserved.<br>
+                </div>
             </section>
         </footer>
     </body>

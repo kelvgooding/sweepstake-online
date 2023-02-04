@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
         <link rel="stylesheet" href="../static/css/styles.css">
-        <title>SS | Group - {{ groupcode }}</title>
+        <title>SS | Group - {{ group_code }}</title>
     </head>
     <body>
         <header>
@@ -21,7 +21,7 @@
             Channel: ITV1<br>
 
             <br><b>GROUP CODE:</b><br><br>
-            {{ groupcode }}
+            {{ group_code }}
             <br>
             <br><b>GROUP HOST:</b><br><br>
             {{ group_host_name.0 }}
@@ -34,22 +34,14 @@
             <b>{{ p_count.0 }}</b> SPACES AVAILABLE<br>
             <b>{{ hp }}</b> RANDOM PICK(S) PER PARTICIPANT<br>
             <b>£{{ PPE.0 }}.00</b> PER PARTICIPANT<br>
-
-            <br>PLEASE CONTACT YOUR GROUP HOST<br>
-            TO ARANGE PAYMENT METHOD.<br>
-
-            <br>YOUR GROUP HOST WILL HAVE THE<br>
-            ABILITY TO MODIFY THE PARTICIPANTS<br>
-            LIST <a href="{{ url_for('admin') }}">HERE</a><br>
-
-            <br>ONCE YOUR GROUP HOST HAS USED<br>
-            THE GENERATE FEATURE, YOUR PICKS<br>
-            WILL BE SHOWN <a href="#show-picks">HERE</a><br>
         
             <hr>
 
 
-            <b>PRIZE MONEY:</b><br><br>
+            <b>PRIZE MONEY:</b><br>
+
+            <br>PLEASE CONTACT YOUR GROUP HOST<br>
+            TO ARANGE PAYMENT METHOD.<br><br>
 
             <table>
                 <tr>
@@ -87,32 +79,25 @@
             <hr>
             <b>PARTICIPANTS:</b><br>
 
+            <br>YOUR GROUP HOST WILL HAVE THE<br>
+            ABILITY TO MODIFY THE PARTICIPANTS<br>
+            LIST <a href="{{ url_for('admin') }}"><b>HERE</b></a><br>
+
             <br>
 
             {% if filled.0 == p_count.0 %}
-
                 {{ filled.0 }}  /  {{ p_count.0 }} PARTICIPANTS
-                <br>
-                <p>NO MORE SPACES AVAILABLE!</p>
-                
+                <p><b>NO MORE SPACES AVAILABLE!</b></p>
             {% else %}
                 {{ filled.0 }}  /  {{ p_count.0 }} PARTICIPANTS
-
                 <br><br>
-
-                JOIN GROUP:
-    
-                <br><br>
-    
                 <form method="POST">
-                    <input type="text" placeholder="Enter your name" name="join-group" required>
+                    <input type="text" placeholder="Enter your name to join" name="join-group" required>
                     <br><br>
                     <input type="submit" value="Join">
                 </form>
-    
+                <br>
             {% endif %}
-
-            <br>
 
             <table>
                 <tr>
@@ -132,6 +117,58 @@
                 {% endfor %}
             </table>
 
+            <hr>
+
+            <b>RANKING:</b>
+            <br><br>
+
+            {%if "1" not in all_horses.0.4|string %}
+            <table>
+                <tr>
+                    <th width="50px">Rank</th>
+                    <th width="200px">Horse</th>
+                    <th width="50px">Odds</th>
+                </tr>
+                <tr>
+                    <td>TBC</td>    
+                    <td>TBC</td>
+                    <td>TBC</td>
+                </tr>
+                <tr>
+                    <td>TBC</td>    
+                    <td>TBC</td>
+                    <td>TBC</td>
+                </tr>
+                <tr>
+                    <td>TBC</td>    
+                    <td>TBC</td>
+                    <td>TBC</td>
+                </tr>
+            </table>
+            {% else %}
+                <table>
+                    <tr>
+                        <th width="30px">Rank</th>
+                        <th width="225px">Horse</th>
+                        <th width="30px">Odds</th>
+                    </tr>
+                    {% for row in all_horses %}
+                    <tr>
+                        <td>{%if row.4 == 1%}
+                            <img width="18" height="18" src="../static/images/first_place.png"/>
+                            {% elif row.4 == 2 %}
+                            <img width="18" height="18" src="../static/images/second_place.png"/>
+                            {% elif row.4 == 3 %}
+                            <img width="18" height="18" src="../static/images/third_place.png"/>
+                            {% endif %}
+                        </td>    
+                        <td>({{ row.1 }}) {{ row.2 }}</td>
+                        <td>{{ row.3 }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+
             <br><br>
 
             <a id="show-picks" href="{{ url_for('picks') }}">SHOW PICKS</a>
@@ -147,10 +184,11 @@
             <!-- Social Media Links -->
 
             <section>
-                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+                <a href="https://livelifeautomate.co.uk" target="_blank"><img src="../static/images/web-logo.png" class="img-logo-social"/></a>
                 <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
                 <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
                 <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
+                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
             </section>
 
             <!-- Copyright -->
