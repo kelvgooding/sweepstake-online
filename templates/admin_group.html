@@ -47,8 +47,12 @@
 
         <br>
 
-        <input type="submit" value="Remove" name="remove" />
+        <input type="submit" value="REMOVE" name="remove" />
         <br>
+
+        {% for i in get_flashed_messages()%}
+        <b> {{ i }} </b>
+        {% endfor %}
 
         <hr>
 
@@ -56,23 +60,20 @@
 
         <br><br>USE THIS FEATURE TO GENERATE<br>THE RANDOM PICKS FOR YOUR GROUP.
 
-        {% for i in get_flashed_messages()%}
-        <b> {{ i }} </b>
-        {% endfor %}
-        
-
         <br><br>
 
         {% if current_date == '04/02/2023' %}
             {% if gen_flag.0.0 == 'Y' %}
-            <input type="submit" value="Generate" name="generate" disabled class="button-disabled" />
+            <input type="submit" value="GENERATE" name="generate" disabled class="button-disabled" />
             <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE HAS ALREADY BEEN USED ONCE.</p>      
+            USE THE BELOW OPTION<br>TO VIEW YOUR GROUP PICKS:<br><br>
+            <button><a href="{{ url_for('picks') }}">SHOW PICKS</a></button><br>
             {% else %}
-            <input type="submit" value="Generate" name="generate"/>
+            <input type="submit" value="GENERATE" name="generate"/>
             <p style="font-size: 12px;">AVAILABLE:<br>THIS FEATURE CAN ONLY BE USED ONCE.</p>
             {% endif %}
         {% else %}
-            <input type="submit" value="Generate" name="generate" disabled class="button-disabled" />    
+            <input type="submit" value="GENERATE" name="generate" disabled class="button-disabled" />    
             <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE WILL UNLOCK ON 15/04/2023 00:00</p>
         {% endif %}
         
