@@ -70,9 +70,23 @@ input[type=submit] {
     background-color: #325e36;
     color: white;
     width: 150px;
-    height: 40px;
+    height: 45px;
     border-radius: 5px;
     border: 0
+}
+
+button {
+    background-color: #325e36;
+    color: white;
+    width: 150px;
+    height: 45px;
+    border-radius: 5px;
+    border: 0;
+}
+
+a {
+    color: #FFFFFF;
+    text-decoration: none;
 }
 
 select {
@@ -102,10 +116,6 @@ table, tr, th, td {
     margin: auto auto;
     height: 30px;
     border-color: #325e36;
-}
-
-a {
-    color: #325e36;
 }
 
 /*** index.html ***/

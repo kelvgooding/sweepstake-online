@@ -41,7 +41,7 @@
             <b>PRIZE MONEY:</b><br>
 
             <br>PLEASE CONTACT YOUR GROUP HOST<br>
-            TO ARANGE PAYMENT METHOD.<br><br>
+            TO ARANGE A PAYMENT METHOD.<br><br>
 
             <table>
                 <tr>
@@ -80,8 +80,9 @@
             <b>PARTICIPANTS:</b><br>
 
             <br>YOUR GROUP HOST WILL HAVE THE<br>
-            ABILITY TO MODIFY THE PARTICIPANTS<br>
-            LIST <a href="{{ url_for('admin') }}"><b>HERE</b></a><br>
+            ABILITY TO MODIFY PARTICIPANTS<br>
+            AND GENERATE THE PICKS HERE:<br><br>
+            <button><a href="{{ url_for('admin') }}">ADMIN</a></button><br>
 
             <br>
 
@@ -94,7 +95,7 @@
                 <form method="POST">
                     <input type="text" placeholder="Enter your name to join" name="join-group" required>
                     <br><br>
-                    <input type="submit" value="Join">
+                    <input type="submit" value="JOIN">
                 </form>
                 <br>
             {% endif %}
@@ -171,11 +172,12 @@
 
             <br><br>
 
-            <a id="show-picks" href="{{ url_for('picks') }}">SHOW PICKS</a>
-
+            <button><a id="show-picks" href="{{ url_for('picks') }}">SHOW PICKS</a></button>
+            
             <br><br>
 
-            <a href="{{ url_for('index') }}">RETURN HOME</a>
+            <button><a id="show-picks" href="{{ url_for('index') }}">RETURN HOME</a></button>
+
             <br>
 
             <br><br>
