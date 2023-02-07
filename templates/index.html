@@ -13,6 +13,7 @@
     <main>
         <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
         <form method="POST">
+        <h1>JOIN A<br>SWEEPSTAKE!</h1>
         ENTER YOUR 6<br>CHARACTER GROUP CODE:<br><br>
         <input class="index-input-group-code" name="groupcode" maxlength="6" required><br><br>
         {% for i in get_flashed_messages() %}
@@ -21,8 +22,8 @@
         <br>
         <input type="submit" value="SUBMIT">
         <br><br>
-        OR
-        <br><br>
+        <h1>CREATE A<br>SWEEPSTAKE!</h1>
+        USE THIS OPTION TO<br>CREATE YOUR SWEEPSTAKE:<br><br>
         <button><a id="show-picks" href="{{ url_for('create_group') }}">CREATE A<br>GROUP CODE</a></button>
 
         </form>
