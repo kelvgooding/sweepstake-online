@@ -119,6 +119,10 @@ table, tr, th, td {
     border-color: #325e36;
 }
 
+h1 {
+    line-height: 1.1;
+}
+
 /*** index.html ***/
 
 .index-input-group-code {

@@ -5,28 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
     <link rel="stylesheet" href="../static/css/styles.css">
-    <title>SS | Grand National 2023</title>
+    <title>SS | Something Went Wrong</title>
 </head>
 <body>
     <header>
     </header>
     <main>
-        <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
-        <form method="POST">
-        <h1>VIEW OR JOIN<br>A SWEEPSTAKE!</h1>
-        ENTER YOUR 6<br>CHARACTER GROUP CODE:<br><br>
-        <input class="index-input-group-code" name="groupcode" maxlength="6" required><br><br>
-        {% for i in get_flashed_messages() %}
-        <b>{{ i }}</b><br>
-        {% endfor %}
         <br>
-        <input type="submit" value="SUBMIT">
-        <hr>
-        <h1>CREATE A<br>SWEEPSTAKE!</h1>
-        USE THIS OPTION TO<br>CREATE YOUR SWEEPSTAKE:<br><br>
-        <button><a id="show-picks" href="{{ url_for('create_group') }}">CREATE A<br>GROUP CODE</a></button>
-
-        </form>
+        <h1>OOPS!<br>SOMETHING WENT WRONG.<br>
+        <br>
+        <button><a id="show-picks" href="{{ url_for('index') }}">RETURN HOME</a></button>
         <br><br>
     </main>
     <footer>
