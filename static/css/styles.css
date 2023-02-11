@@ -102,12 +102,12 @@ select {
 }
 
 hr {
-    width: 200px;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    width: 75px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     background-color: #325e36;
     border: none;
-    height: 3px;
+    height: 2px;
 }
 
 table, tr, th, td {
@@ -121,7 +121,14 @@ table, tr, th, td {
 
 h1 {
     line-height: 1.1;
+    color: #325e36;
 }
+
+h2 {
+    line-height: 1.1;
+    color: #325e36;
+}
+
 
 /*** index.html ***/
 
