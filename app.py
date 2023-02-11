@@ -30,7 +30,7 @@ def index():
 
     all_group_codes = []
 
-    if request.method == "POST":
+    if 'current_ss' in request.form and request.method == "POST":
 
         # loop through groupid column in ss_group and add codes to all_group_codes list array
 
@@ -46,6 +46,47 @@ def index():
         else:
             flash("INVALID GROUP CODE.")
             flash("PLEASE TRY AGAIN.")
+
+    elif 'new_ss' in request.form and request.method == "POST":
+
+        new_group_code = ''.join(random.choices(string.ascii_uppercase, k=6))
+
+        # insert form data into ss_group table
+
+        c.execute("INSERT INTO ss_group VALUES (?, ?, ?, ?, ?, NULL, CURRENT_TIMESTAMP)", (
+            f'{request.form.get("num_of_part")}',
+            f'{request.form.get("hostname")}',
+            f'{request.form.get("email")}',
+            f'{request.form.get("entry_price")}',
+            f'{new_group_code}',))
+        connection.commit()
+
+        # insert form data into ss_group_hosts table
+
+        c.execute("INSERT INTO ss_group_hosts VALUES (?, ?, CURRENT_TIMESTAMP)",
+                  (f'{request.form.get("hostname")}', f'{request.form.get("email")}',))
+        connection.commit()
+
+        # create table using the the randomly generated 6 character group code
+
+        c.execute(f"CREATE TABLE {new_group_code} (status, full_name, admin, group_code, grp_rank)")
+        connection.commit()
+
+        # Insert create group row data into new group code
+
+        c.execute(
+            f"INSERT INTO {new_group_code} values ('Y', '{request.form.get('hostname')}', 'Y', '{new_group_code}', 'TBC')")
+        connection.commit()
+
+        # create table group code - XXXXXX_P
+
+        c.execute(f"CREATE TABLE {new_group_code}_P (name, horse_name)")
+        connection.commit()
+
+        flash(f"KEEP THIS CODE SAFE.")
+        flash(f"YOUR GROUP CODE IS:")
+        flash('')
+        flash(f"{new_group_code.upper()}")
 
     return render_template("index.html")
 

@@ -14,20 +14,20 @@
 
             <a href="{{ url_for('admin') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
             
-            <br><br>
+            <br>
 
-            <b>GROUP CODE:</b><br><br>
+            <h2>GROUP CODE</h2>
             {{ groupcode }}<br><br>
 
-            <b>MAX SPACES AVAILABLE:</b><br><br>
+            <h2>SPACES AVAILABLE</h2>
             {{ max_participants.0.0 }}<br><br>
 
-            <b>ENTRY PRICE:</b><br><br>
+            <h2>ENTRY PRICE</h2>
             £{{ entry_price.0.0 }}.00<br>
 
             <hr>
 
-            <b>PARTICIPANTS:</b><br><br>
+            <h2>PARTICIPANTS</h2>
 
             SELECT A/MULTIPLE NAMES AND USE<br>THE BUTTON TO REMOVE<br>PARTICIPANTS FROM YOUR GROUP.<br><br>
         
@@ -56,12 +56,9 @@
 
         <hr>
 
-        <b>GENERATE:</b>
+        <h2>GENERATE</h2>
 
-
-        <br>
-
-        {% if current_date == '07/02/2023' %}
+        {% if current_date == '11/02/2023' %}
             {% if gen_flag.0.0 == 'Y' %}
             <br>
             <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE HAS ALREADY BEEN USED ONCE.</p>      
@@ -74,13 +71,11 @@
             OR
             {% endif %}
         {% else %}
-            <br>
             <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE WILL APPEAR ON<br>15/04/2023 00:00</p>
         {% endif %}
-        
         </form>
 
-        <br>
+        <hr>
 
         <button><a href="{{ url_for('admin') }}">RETURN HOME</a></button>
 

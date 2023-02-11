@@ -14,33 +14,38 @@
             
             <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
             
-            <br><b>DETAILS:</b></br><br>
+            <h2>DETAILS</h2>
             Date: Saturday 15th April 2023<br>
             Time: 17:15 GMT<br>
             Location: Aintree Racecourse<br>
             Channel: ITV1<br>
 
-            <br><b>GROUP CODE:</b><br><br>
+            <h2>GROUP CODE</h2>
             {{ group_code }}
             <br>
-            <br><b>GROUP HOST:</b><br><br>
+
+            <h2>GROUP HOST</h2>
             {{ group_host_name.0 }}
             <br>
             <hr>
 
-            <b>RULES:</b><br><br>
+            <h2>RULES</h2>
 
             <b>40</b> HORSES RUNNING<br>
             <b>{{ p_count.0 }}</b> SPACES AVAILABLE<br>
             <b>{{ hp }}</b> RANDOM PICK(S) PER PARTICIPANT<br>
             <b>£{{ PPE.0 }}.00</b> PER PARTICIPANT<br>
+
+            <br>
+
+            <button><a id="show-picks" href="{{ url_for('picks') }}">SHOW PICKS</a></button>
         
             <hr>
 
 
-            <b>PRIZE MONEY:</b><br>
+            <h2>PRIZE MONEY</h2>
 
-            <br>PLEASE CONTACT YOUR GROUP HOST<br>
+            PLEASE CONTACT YOUR GROUP HOST<br>
             TO ARANGE A PAYMENT METHOD.<br><br>
 
             <table>
@@ -77,9 +82,9 @@
             </table>
 
             <hr>
-            <b>PARTICIPANTS:</b><br>
+            <h2>PARTICIPANTS</h2>
 
-            <br>YOUR GROUP HOST WILL HAVE THE<br>
+            YOUR GROUP HOST WILL HAVE THE<br>
             ABILITY TO MODIFY PARTICIPANTS<br>
             AND GENERATE THE PICKS HERE:<br><br>
             <button><a href="{{ url_for('admin') }}">ADMIN</a></button><br>
@@ -120,8 +125,11 @@
 
             <hr>
 
-            <b>RANKING:</b>
-            <br><br>
+            <h2>RANKING</h2>
+
+            THE TOP 3 HORSES WILL SHOW HERE<br>
+            ONCE THE RACE IS COMPLETE AND<br>
+            THE RESULTS ARE OFFICIAL.<br><br>
 
             {%if "1" not in all_horses.0.4|string %}
             <table>
@@ -170,9 +178,6 @@
                 </table>
             {% endif %}
 
-            <br><br>
-
-            <button><a id="show-picks" href="{{ url_for('picks') }}">SHOW PICKS</a></button>
             
             <br><br>
 

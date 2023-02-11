@@ -14,18 +14,18 @@
 
             <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
             
-            <br><br>
-            <div class="admin-login-section">
-                <form method="POST">
+            <h1>GROUP HOST<br>LOGIN</h1>
+
+            <b><p>AS GROUP HOST, LOG IN BELOW<br>TO AMEND YOUR GROUP, AND<br>AUTOMATICALLY GENERATE<br>THE HORSE PICKS SWEEPSTAKE.</p></b>
+
+            <form method="POST">
                 <br>EMAIL:<br>
                 <input type="text" name="admin-email" placeholder="Enter your Email" required/><br><br>
                 GROUP CODE:<br>
                 <input type="text" name="admin-group-id" maxlength=6 placeholder="Enter your Group Code" required/><br>
                 <br><br>
-                <input type="submit" value="Confirm"/>
+                <input type="submit" value="LOGIN"/>
             </form>
-
-        </div>
 
         {% for i in get_flashed_messages()%}
         <h3>{{i}}</h3>
