@@ -200,6 +200,12 @@ h2 {
     height: 100px;
     margin-top: 20px;
     margin-bottom: 20px;
+    transition: 1s ease-in-out; 
+}
+
+.img-logo:hover {
+    transition: 1s ease-in-out; 
+    transform: scale(1.1);
 }
 
 .img-logo-social {
