@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 
-# Last Updated: 12/02/2023
-# Last Updated By: Kelv Gooding
-
 # Modules
 
-from bs4 import BeautifulSoup
-import requests
 import sqlite3
 
 connection = sqlite3.connect("../db/SS_DB_PROD.db", check_same_thread=False)
