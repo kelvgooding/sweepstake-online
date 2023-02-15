@@ -90,50 +90,6 @@ def index():
 
     return render_template("index.html")
 
-@app.route("/create_group", methods=["POST", "GET"])
-def create_group():
-
-    # create a 6 character group code
-
-    new_group_code = ''.join(random.choices(string.ascii_uppercase, k=6))
-
-    if request.method == "POST":
-
-        # insert form data into ss_group table
-
-        c.execute("INSERT INTO ss_group VALUES (?, ?, ?, ?, ?, NULL, CURRENT_TIMESTAMP)", (
-            f'{request.form.get("num_of_part")}',
-            f'{request.form.get("hostname")}',
-            f'{request.form.get("email")}',
-            f'{request.form.get("entry_price")}',
-            f'{new_group_code}',))
-        connection.commit()
-
-        # insert form data into ss_group_hosts table
-
-        c.execute("INSERT INTO ss_group_hosts VALUES (?, ?, CURRENT_TIMESTAMP)", (f'{request.form.get("hostname")}', f'{request.form.get("email")}',))
-        connection.commit()
-
-        # create table using the the randomly generated 6 character group code
-
-        c.execute(f"CREATE TABLE {new_group_code} (status, full_name, admin, group_code, grp_rank)")
-        connection.commit()
-
-        # Insert create group row data into new group code
-
-        c.execute(f"INSERT INTO {new_group_code} values ('Y', '{request.form.get('hostname')}', 'Y', '{new_group_code}', 'TBC')")
-        connection.commit()
-
-        # create table group code - XXXXXX_P
-
-        c.execute(f"CREATE TABLE {new_group_code}_P (name, horse_name)")
-        connection.commit()
-
-        flash(f"YOUR GROUP CODE IS: {new_group_code.upper()}")
-        flash(f"KEEP THIS CODE SAFE.")
-
-    return render_template("create_group.html")
-
 @app.route("/group", methods=["POST", "GET"])
 def group():
 
@@ -523,86 +479,6 @@ def admin_group():
             print("----- STEP 2 -----")
 
             c.execute(f"SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode}")
-            participants_list = c.fetchall()
-            print(participants_list)
-
-            c.execute("SELECT h_code FROM gn_horses;")
-            horses_list = c.fetchall()
-            print(horses_list)
-
-            print("----- STEP 3 -----")
-
-            while True:
-
-                # every horses in list, number of horses
-
-                pairings = random.sample(horses_list, k=len(horses_list))
-                print("----- STEP 3A -----")
-                print(pairings)
-
-                if not any(a == b for a, b in zip(horses_list, pairings)):
-                    break
-
-            print("----- STEP 3B -----")
-            for a, b, cate in zip(participants_list, pairings, generate_list):
-                print(f'{a} x {b}')
-                c.execute(f"INSERT INTO {groupcode}_P VALUES (?, ?)",
-                          (f"{a[0]}", f"{b[0]}"))
-                connection.commit()
-
-        if counted == "2":
-
-            print("----- STEP 1 -----")
-            # This step is determined by how many players there are. The unions must corrospond.
-            generate_list = []
-            c.execute(f"SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode}")
-            for i in c.fetchall():
-                generate_list.append(i)
-            print(generate_list)
-
-            print("----- STEP 2 -----")
-
-            c.execute(f"SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode}")
-            participants_list = c.fetchall()
-            print(participants_list)
-
-            c.execute("SELECT h_code FROM gn_horses;")
-            horses_list = c.fetchall()
-            print(horses_list)
-
-            print("----- STEP 3 -----")
-
-            while True:
-
-                # every horses in list, number of horses
-
-                pairings = random.sample(horses_list, k=len(horses_list))
-                print("----- STEP 3A -----")
-                print(pairings)
-
-                if not any(a == b for a, b in zip(horses_list, pairings)):
-                    break
-
-            print("----- STEP 3B -----")
-            for a, b, cate in zip(participants_list, pairings, generate_list):
-                print(f'{a} x {b}')
-                c.execute(f"INSERT INTO {groupcode}_P VALUES (?, ?)",
-                          (f"{a[0]}", f"{b[0]}"))
-                connection.commit()
-
-        if counted == "1":
-
-            print("----- STEP 1 -----")
-            # This step is determined by how many players there are. The unions must corrospond.
-            generate_list = []
-            c.execute(f"SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode}")
-            for i in c.fetchall():
-                generate_list.append(i)
-            print(generate_list)
-
-            print("----- STEP 2 -----")
-
-            c.execute(f"SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode}")
             participants_list = c.fetchall()
             print(participants_list)
 
