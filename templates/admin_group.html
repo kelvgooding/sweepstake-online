@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
         <link rel="stylesheet" href="../static/css/styles.css">
-        <title>SS | Admin - {{ groupcode }}</title>
+        <title>Admin - {{ groupcode }} | Sweepstake Online</title>
     </head>
     <body>
         <header>
@@ -58,26 +58,20 @@
 
         <h2>GENERATE</h2>
 
-        {% if current_date == '18/02/2023' %}
-            {% if gen_flag.0.0 == 'Y' %}
-            <br>
-            <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE HAS ALREADY BEEN USED ONCE.</p>      
-            <br>USE THE BELOW OPTION<br>TO VIEW YOUR GROUP PICKS:<br><br>
-            <button><a href="{{ url_for('picks') }}">SHOW PICKS</a></button><br><br>OR
-            {% else %}
-            <br>USE THIS FEATURE TO GENERATE<br>THE RANDOM PICKS FOR YOUR GROUP.<br><br>
-            <input type="submit" value="GENERATE" name="generate"/>
-            <p style="font-size: 12px;">AVAILABLE:<br>THIS FEATURE CAN ONLY BE USED ONCE.</p>
-            OR
-            {% endif %}
+        {% if gen_flag.0.0 == 'Y' %}
+        <p style="font-size: 12px;">LOCKED!<br>THIS FEATURE HAS ALREADY BEEN USED ONCE.</p>      
+        <br>USE THE BELOW OPTION<br>TO VIEW YOUR GROUP PICKS:<br><br>
+        <button><a href="{{ url_for('picks') }}">SHOW PICKS</a></button><br><br>
+        OR
         {% else %}
-            <p style="font-size: 12px;">LOCKED:<br>THIS FEATURE WILL APPEAR ON<br>15/04/2023 00:00</p>
+        <br>USE THIS FEATURE TO GENERATE<br>THE RANDOM PICKS FOR YOUR GROUP.<br><br>
+        <input type="submit" value="GENERATE" name="generate"/>
+        <p style="font-size: 12px;">AVAILABLE:<br>THIS FEATURE CAN ONLY BE USED ONCE.</p>
+        OR
         {% endif %}
+
         </form>
-
-        <hr>
-
-        <button><a href="{{ url_for('admin') }}">RETURN HOME</a></button>
+        <br><button><a href="{{ url_for('admin') }}">RETURN HOME</a></button>
 
         <br><br><br>
 
@@ -90,7 +84,7 @@
                 <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
                 <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
                 <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
-                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+                <a href="mailto:support@livelifeautomate.co.uk?subject=Sweepstake Online - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
             </section>
 
             <!-- Copyright -->

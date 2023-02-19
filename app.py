@@ -10,6 +10,7 @@ import random
 import string
 from datetime import datetime
 import os
+import time
 
 # flask variables
 
@@ -25,6 +26,12 @@ c = connection.cursor()
 
 @app.route("/", methods=["POST", "GET"])
 def index():
+
+    date1 = datetime.today().strftime("%d/%m/%Y")
+    date2 = '10/04/2023'
+
+    current_date = time.strptime(date1, "%d/%m/%Y")
+    unlock_date = time.strptime(date2, "%d/%m/%Y")
 
     # an empty list array to store all group codes from ss_group table
 
@@ -57,7 +64,7 @@ def index():
             f'{request.form.get("num_of_part")}',
             f'{request.form.get("hostname")}',
             f'{request.form.get("email")}',
-            f'{request.form.get("entry_price")}',
+            f'{request.form.get("entry_price").replace(".00", "")}',
             f'{new_group_code}',))
         connection.commit()
 
@@ -83,12 +90,12 @@ def index():
         c.execute(f"CREATE TABLE {new_group_code}_P (name, horse_name)")
         connection.commit()
 
-        flash(f"KEEP THIS CODE SAFE.")
-        flash(f"YOUR GROUP CODE IS:")
-        flash('')
-        flash(f"{new_group_code.upper()}")
+        flash(f'YOUR GROUP CODE IS:')
+        flash(f'{new_group_code.upper()}', 'success')
+        flash(f'COPY THIS CODE & KEEP IT SAFE!')
 
-    return render_template("index.html")
+
+    return render_template("index.html", current_date=current_date, unlock_date=unlock_date)
 
 @app.route("/group", methods=["POST", "GET"])
 def group():
@@ -227,7 +234,6 @@ def admin():
 @app.route("/admin/group", methods=["POST", "GET"])
 def admin_group():
     groupcode = session.get('my_var2', None)
-    current_date = datetime.today().strftime("%d/%m/%Y")
 
     c.execute(f"SELECT status, full_name from '{groupcode}'")
     contacts = c.fetchall()
@@ -518,8 +524,7 @@ def admin_group():
                            groupcode=groupcode,
                            gen_flag=gen_flag,
                            max_participants=max_participants,
-                           entry_price=entry_price,
-                           current_date=current_date)
+                           entry_price=entry_price)
 
 if __name__ == "__main__":
     app.debug = True
