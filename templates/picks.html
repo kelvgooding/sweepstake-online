@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
         <link rel="stylesheet" href="../static/css/styles.css">
-        <title>SS | Picks - {{ groupcode }}</title>
+        <title>Picks - {{ groupcode }} | Sweepstake Online</title>
     </head>
     <body>
         <header>
@@ -16,10 +16,15 @@
 
             <br>
 
-            <input id="searchbar" onkeyup="search_participants()" type="text"
-            name="search" placeholder="SEARCH YOUR PICKS HERE" class="picks-searchbar">
+            SEARCH HERE:<br>
+
+            <input id="searchbar" onkeyup="search_participants()" type="text" name="search" placeholder="SEARCH YOUR PICKS HERE" class="picks-searchbar">
 
             <br><br>
+
+            VIEW YOUR GRAND NATIONAL 2023<br>SWEEPSTAKE PICKS BELOW:
+
+            <br>
 
             {% for a in participants %}
                 <div class="participants">
@@ -47,7 +52,7 @@
                 <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
                 <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
                 <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
-                <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+                <a href="mailto:support@livelifeautomate.co.uk?subject=Sweepstake Online - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
             </section>
 
             <!-- Copyright -->

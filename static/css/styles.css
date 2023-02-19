@@ -141,6 +141,17 @@ h2 {
     color: #325e36;
 }
 
+.alert.success {
+    background-color: #325e36;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    margin: auto auto;
+    width: 170px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /*** picks.html ***/
 
 .picks-searchbar {
@@ -180,17 +191,6 @@ h2 {
     margin: auto auto;
     border-radius: 10px;
     background-color: rgba(239, 239, 239, 0.841);
-}
-
-/*** admin_group.html ***/
-
-.button-disabled {
-    width: 150px;
-    height: 40px;
-    background-color: #a8a8a8;
-    color: white;
-    border-radius: 5px;
-    border: 0
 }
 
 /*** All Pages ***/

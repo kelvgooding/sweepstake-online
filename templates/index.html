@@ -5,54 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
     <link rel="stylesheet" href="../static/css/styles.css">
-    <title>SS | Grand National 2023</title>
+    <title>Grand National 2023 | Sweepstake Online</title>
 </head>
 <body>
     <header>
     </header>
     <main>
+
         <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
         <br>
 
-        {% for i in get_flashed_messages() %}
-        <b>{{ i }}</b><br>
-        {% endfor %}
+        {% if current_date < unlock_date %}
+        
+            <h1>COMING SOON!</h1>
 
-        <form method="POST">
-            <h1>VIEW OR JOIN<br>A SWEEPSTAKE!</h1>
-            <b>ENTER YOUR 6<br>CHARACTER GROUP CODE:<br><br></b>
-            <input class="index-input-group-code" name="groupcode" maxlength="6" required><br><br>
-            <br>
-            <input type="submit" value="SUBMIT" name="current_ss">
-        </form>
+            THE GRAND NATIONAL 2023 SWEEPSTAKE<br>WILL BE AVAILABLE ON 10/04/2023
 
-        <hr>
+        {% else %}
 
-        <form method="POST">
-            <h1>CREATE A<br>SWEEPSTAKE!</h1>
-            <b>USE THIS OPTION TO<br>CREATE YOUR SWEEPSTAKE:<br><br></b>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div id='myInput' class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
-            NUMBER OF PARTICIPANTS:<br>
-            <select name="num_of_part" required>
-                <option value="-">-</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="8">8</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="40">40</option>
-            </select><br/><br>
+            <form method="POST">
+                <h1>VIEW OR JOIN<br>A SWEEPSTAKE!</h1>
+                <b>ENTER YOUR 6<br>CHARACTER GROUP CODE:<br><br></b>
+                <input class="index-input-group-code" name="groupcode" maxlength="6" required><br><br>
+                <br>
+                <input type="submit" value="SUBMIT" name="current_ss">
+            </form>
 
-            GROUP HOST NAME:<br>
-            <input type="text" name="hostname" required><br><br>
-            EMAIL:<br>
-            <input type="email" name="email" required><br><br>
-            ENTRY PRICE PER PARTICIPANT:<br>
-            <input type="number" name="entry_price" required><br><br>
-            <br>
-            <input type="submit" value="CREATE" name="new_ss">
-            <br><br>
-        </form>
+            <hr>
+
+            <form method="POST">
+                <h1>CREATE A<br>SWEEPSTAKE!</h1>
+                <b>USE THIS OPTION TO<br>CREATE YOUR SWEEPSTAKE:<br><br></b>
+
+                NUMBER OF PARTICIPANTS:<br>
+                <select name="num_of_part" required>
+                    <option value="-">-</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="8">8</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="40">40</option>
+                </select><br/><br>
+
+                GROUP HOST NAME:<br>
+                <input type="text" name="hostname" required><br><br>
+                EMAIL:<br>
+                <input type="email" name="email" required><br><br>
+                ENTRY PRICE PER PARTICIPANT:<br>
+                <input type="number" name="entry_price" required><br><br>
+                <br>
+                <input type="submit" value="CREATE" name="new_ss">
+                <br><br>
+            </form>
+
+        {% endif %}
 
     <br>
     </main>
@@ -63,7 +78,7 @@
         <a href="https://instagram.com/kelvgooding" target="_blank"><img src="../static/images/instagram-logo.png" class="img-logo-social"/></a>
         <a href="https://www.linkedin.com/in/kelvingooding/" target="_blank"><img src="../static/images/linkedin-logo.png" class="img-logo-social"/></a>
         <a href="https://github.com/kelvgooding/" target="_blank"><img src="../static/images/github-logo.png" class="img-logo-social"/></a>
-        <a href="mailto:kelvingooding@livelifeautomate.co.uk?subject=Grand National 2023 - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
+        <a href="mailto:support@livelifeautomate.co.uk?subject=Sweepstake Online - Feedback"><img src="../static/images/mail-logo.png" class="img-logo-social"/></a>
         </section>
         <br>
         <!-- Copyright -->
