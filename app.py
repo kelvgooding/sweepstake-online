@@ -28,7 +28,7 @@ c = connection.cursor()
 def index():
 
     date1 = datetime.today().strftime("%d/%m/%Y")
-    date2 = '10/02/2023'
+    date2 = '10/04/2023'
 
     current_date = time.strptime(date1, "%d/%m/%Y")
     unlock_date = time.strptime(date2, "%d/%m/%Y")
