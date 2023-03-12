@@ -28,7 +28,7 @@ c = connection.cursor()
 def index():
 
     date1 = datetime.today().strftime("%d/%m/%Y")
-    date2 = '10/04/2023'
+    date2 = '11/03/2023'
 
     current_date = time.strptime(date1, "%d/%m/%Y")
     unlock_date = time.strptime(date2, "%d/%m/%Y")
@@ -147,7 +147,7 @@ def group():
 
     # number of horse picks per participant
 
-    horse_picks = (int(40) / int(p_count[0]))
+    horse_picks = (int(14) / int(p_count[0]))
 
     # SQL to show count of rows in the group code table
 
@@ -159,7 +159,7 @@ def group():
         print(filled)
         filled.append(str(i[0]))
 
-    participants_query = f"SELECT '{session.get('my_var', None)}'.status, '{session.get('my_var', None)}'.full_name, gn_horses.h_num, gn_horses.h_name, gn_horses.h_odds, gn_horses.ranked FROM '{session.get('my_var', None)}' LEFT JOIN gn_horses ON '{session.get('my_var', None)}'.grp_rank = gn_horses.h_code;"
+    participants_query = f"SELECT '{session.get('my_var', None)}'.status, '{session.get('my_var', None)}'.full_name, cltm_horses.h_num, cltm_horses.h_name, cltm_horses.h_odds, cltm_horses.ranked FROM '{session.get('my_var', None)}' LEFT JOIN cltm_horses ON '{session.get('my_var', None)}'.grp_rank = cltm_horses.h_code;"
 
     c.execute(participants_query)
     participants = c.fetchall()
@@ -169,7 +169,7 @@ def group():
     c.execute(f"SELECT status, full_name FROM '{session.get('my_var', None)}';")
     participants2 = c.fetchall()
 
-    c.execute(f'SELECT * FROM gn_horses ORDER BY ranked ASC LIMIT 3;')
+    c.execute(f'SELECT * FROM cltm_horses ORDER BY ranked ASC LIMIT 3;')
     all_horses = c.fetchall()
 
 
@@ -201,9 +201,9 @@ def picks():
 
     groupcode = session.get('my_var2', None)
 
-    # SQL001 - JOIN group code to gn_horses to generate new table.
+    # SQL001 - JOIN group code to cltm_horses to generate new table.
 
-    c.execute(f"SELECT '{session.get('my_var', None)}_P'.name, gn_horses.h_num, gn_horses.h_name, gn_horses.h_odds, gn_horses.ranked FROM '{session.get('my_var', None)}_P' LEFT JOIN gn_horses ON '{session.get('my_var', None)}_P'.horse_name = gn_horses.h_code;")
+    c.execute(f"SELECT '{session.get('my_var', None)}_P'.name, cltm_horses.h_num, cltm_horses.h_name, cltm_horses.h_odds, cltm_horses.ranked FROM '{session.get('my_var', None)}_P' LEFT JOIN cltm_horses ON '{session.get('my_var', None)}_P'.horse_name = cltm_horses.h_code;")
     participants = c.fetchall()
 
     return render_template("picks.html",
@@ -271,89 +271,7 @@ def admin_group():
         print(counted)
         print("----- PART CHECK -----")
 
-        if counted == "40":
-
-            print("----- STEP 1 -----")
-            # This step is determined by how many players there are. The unions must corrospond.
-            generate_list = []
-            c.execute(f"SELECT * FROM {groupcode};")
-            for i in c.fetchall():
-                generate_list.append(i)
-            print(generate_list)
-
-            print("----- STEP 2 -----")
-
-            c.execute(f"SELECT full_name FROM {groupcode};")
-            participants_list = c.fetchall()
-            print(participants_list)
-
-            c.execute("SELECT h_code FROM gn_horses;")
-            horses_list = c.fetchall()
-            print(horses_list)
-
-
-            print("----- STEP 3 -----")
-
-            while True:
-
-                # every horses in list, number of horses
-
-                pairings = random.sample(horses_list, k=len(horses_list))
-                print("----- STEP 3A -----")
-                print(pairings)
-
-                if not any(a == b for a, b in zip(horses_list, pairings)):
-                    break
-
-            print("----- STEP 3B -----")
-            for a, b, cate in zip(participants_list, pairings, generate_list):
-                print(f'{a} x {b}')
-                c.execute(f"INSERT INTO {groupcode}_P VALUES (?, ?)",
-                          (f"{a[0]}", f"{b[0]}"))
-                connection.commit()
-
-        if counted == "20":
-
-            print("----- STEP 1 -----")
-            # This step is determined by how many players there are. The unions must corrospond.
-            generate_list = []
-            c.execute(f"SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode};")
-            for i in c.fetchall():
-                generate_list.append(i)
-            print(generate_list)
-
-            print("----- STEP 2 -----")
-
-            c.execute(f"SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode};")
-            participants_list = c.fetchall()
-            print(participants_list)
-
-            c.execute("SELECT h_code FROM gn_horses;")
-            horses_list = c.fetchall()
-            print(horses_list)
-
-
-            print("----- STEP 3 -----")
-
-            while True:
-
-                # every horses in list, number of horses
-
-                pairings = random.sample(horses_list, k=len(horses_list))
-                print("----- STEP 3A -----")
-                print(pairings)
-
-                if not any(a == b for a, b in zip(horses_list, pairings)):
-                    break
-
-            print("----- STEP 3B -----")
-            for a, b, cate in zip(participants_list, pairings, generate_list):
-                print(f'{a} x {b}')
-                c.execute(f"INSERT INTO {groupcode}_P VALUES (?, ?)",
-                          (f"{a[0]}", f"{b[0]}"))
-                connection.commit()
-
-        if counted == "10":
+        if counted == "14":
 
             print("----- STEP 1 -----")
             # This step is determined by how many players there are. The unions must corrospond.
@@ -369,7 +287,7 @@ def admin_group():
             participants_list = c.fetchall()
             print(participants_list)
 
-            c.execute("SELECT h_code FROM gn_horses;")
+            c.execute("SELECT h_code FROM cltm_horses;")
             horses_list = c.fetchall()
             print(horses_list)
 
@@ -393,7 +311,7 @@ def admin_group():
                           (f"{a[0]}", f"{b[0]}"))
                 connection.commit()
 
-        if counted == "8":
+        if counted == "7":
 
             print("----- STEP 1 -----")
             # This step is determined by how many players there are. The unions must corrospond.
@@ -408,87 +326,7 @@ def admin_group():
             participants_list = c.fetchall()
             print(participants_list)
 
-            c.execute("SELECT h_code FROM gn_horses;")
-            horses_list = c.fetchall()
-            print(horses_list)
-
-            print("----- STEP 3 -----")
-
-            while True:
-
-                # every horses in list, number of horses
-
-                pairings = random.sample(horses_list, k=len(horses_list))
-                print("----- STEP 3A -----")
-                print(pairings)
-
-                if not any(a == b for a, b in zip(horses_list, pairings)):
-                    break
-
-            print("----- STEP 3B -----")
-            for a, b, cate in zip(participants_list, pairings, generate_list):
-                print(f'{a} x {b}')
-                c.execute(f"INSERT INTO {groupcode}_P VALUES (?, ?)",
-                          (f"{a[0]}", f"{b[0]}"))
-                connection.commit()
-
-        if counted == "5":
-
-            print("----- STEP 1 -----")
-            # This step is determined by how many players there are. The unions must corrospond.
-            generate_list = []
-            c.execute(f"SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode}")
-            for i in c.fetchall():
-                generate_list.append(i)
-            print(generate_list)
-
-            print("----- STEP 2 -----")
-
-            c.execute(f"SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode}")
-            participants_list = c.fetchall()
-            print(participants_list)
-
-            c.execute("SELECT h_code FROM gn_horses;")
-            horses_list = c.fetchall()
-            print(horses_list)
-
-            print("----- STEP 3 -----")
-
-            while True:
-
-                # every horses in list, number of horses
-
-                pairings = random.sample(horses_list, k=len(horses_list))
-                print("----- STEP 3A -----")
-                print(pairings)
-
-                if not any(a == b for a, b in zip(horses_list, pairings)):
-                    break
-
-            print("----- STEP 3B -----")
-            for a, b, cate in zip(participants_list, pairings, generate_list):
-                print(f'{a} x {b}')
-                c.execute(f"INSERT INTO {groupcode}_P VALUES (?, ?)",
-                          (f"{a[0]}", f"{b[0]}"))
-                connection.commit()
-
-        if counted == "4":
-
-            print("----- STEP 1 -----")
-            # This step is determined by how many players there are. The unions must corrospond.
-            generate_list = []
-            c.execute(f"SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode} UNION ALL SELECT * FROM {groupcode}")
-            for i in c.fetchall():
-                generate_list.append(i)
-            print(generate_list)
-
-            print("----- STEP 2 -----")
-
-            c.execute(f"SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode} UNION ALL SELECT full_name FROM {groupcode}")
-            participants_list = c.fetchall()
-            print(participants_list)
-
-            c.execute("SELECT h_code FROM gn_horses;")
+            c.execute("SELECT h_code FROM cltm_horses;")
             horses_list = c.fetchall()
             print(horses_list)
 

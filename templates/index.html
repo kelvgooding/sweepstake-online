@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../static/images/first_place.png">
     <link rel="stylesheet" href="../static/css/styles.css">
-    <title>Grand National 2023 | Sweepstake Online</title>
+    <title>Cheltenham 2023 | Sweepstake Online</title>
 </head>
 <body>
     <header>
     </header>
     <main>
 
-        <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/grand-national-2023-logo.png" /></a>
+        <a href="{{ url_for('index') }}"><img class="img-logo" src="../static/images/cheltenham-logo.jpg" /></a>
         <br>
 
         {% if current_date < unlock_date %}
@@ -48,12 +48,8 @@
                 NUMBER OF PARTICIPANTS:<br>
                 <select name="num_of_part" required>
                     <option value="-">-</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="8">8</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="40">40</option>
+                    <option value="7">7</option>
+                    <option value="14">14</option>
                 </select><br/><br>
 
                 GROUP HOST NAME:<br>
